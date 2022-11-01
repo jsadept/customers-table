@@ -1,12 +1,12 @@
 export interface CustomersList {
-    id: string;
-    created: Date;
+    id?: string;
+    created?: string;
     clients: string;
-    since: Date;
+    since: string;
     total_earnings: string;
     available_credit: string;
     status: string;
-    additional: {
+    additional?: {
         main_contact: {
             first_name: string;
             last_name: string;
@@ -16,3 +16,7 @@ export interface CustomersList {
 }
 
 
+export interface CustomersListHeaders {
+    title: string;
+    id: string
+}
