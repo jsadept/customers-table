@@ -69,3 +69,27 @@
     opacity: 1;
     transition: opacity 0.4s;
 }
+
+
+.total-clients__title{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #455A64;
+}
+.total-clients__number{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #455A64;
+}
+
+.main-contact{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    color: #455A64;
+    margin-bottom: 22px;
+}
