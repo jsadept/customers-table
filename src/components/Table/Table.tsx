@@ -42,15 +42,15 @@ const Table: FC<TableProps> = (props) => {
 
 
     return (
-        <table className="min-w-full divide-y divide-gray-300 table-fixed rounded-lg overflow-hidden">
+        <table className="min-w-full divide-y divide-gray-300 table-fixed rounded-b-xl">
             <thead className="bg-gray-50">
             <tr>
                 {cols.map((column) => (
                     <th
                         scope="col"
-                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                        className="py-3.5 pl-2 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
                         id={column.id}
-                        key={getRandomId()}
+                        key={column.id}
                         draggable
                         onDragStart={handleDragStart}
                         onDragOver={handleDragOver}
@@ -102,7 +102,7 @@ const Table: FC<TableProps> = (props) => {
                         backgroundColor: expendedId === row.id+'.1' ? '#66AFFF' : (index % 2 === 0 ? '#FFFFFF' : '#FCFCFD'),
                         color: expendedId === row.id+'.1' ? '#FFFFFF' : '#6E6B7B'
                     }}
-                    key={getRandomId()}
+                    key={row.id!+index}
                 >
                     {Object.entries(row).map(([k, value], idx) => {
                         const currentHeader = cols[idx]?.id as keyof typeof row;
@@ -112,7 +112,7 @@ const Table: FC<TableProps> = (props) => {
                         }
                         else return (
                             <td
-                                key={getRandomId()}
+                                key={row.id!+2+idx}
                                 style={{
                                     opacity: cols[idx].id === dragOver ? 0.5 : 1,
                                     maxWidth: '100px'
@@ -134,7 +134,12 @@ const Table: FC<TableProps> = (props) => {
                                         <>{row[cols[idx].id as keyof typeof row]}</>
                                     </span>
                                 }
-                                {cols[idx].id !== 'status' &&
+
+                                {cols[idx].id === 'since' &&
+                                    <>{new Date(row[cols[idx].id as keyof typeof row] as Date).toLocaleDateString('en-us', { year:"numeric", month:"short", day: "numeric"})}</>
+                                }
+
+                                {cols[idx].id !== 'status' && cols[idx].id !== 'since' &&
                                     <>{row[cols[idx].id as keyof typeof row]}</>
                                 }
                             </td>
@@ -150,11 +155,11 @@ const Table: FC<TableProps> = (props) => {
                         }}
                         className="py-4 pr-3 pl-4"
                     >
-                        <div onClick={() => onExpendAdditional(row.id+'.1')}><ShowMoreButton expendedId={expendedId!} itemId={row.id+'.1'} /></div>
+                        <div style={{cursor: 'pointer'}} onClick={() => onExpendAdditional(row.id+'.1')}><ShowMoreButton expendedId={expendedId!} itemId={row.id+'.1'} /></div>
                         <div className="ml-4 flex align-bottom"><Dropdown tableItemId={row.id} tableItemStatus={row.status} expendedId={expendedId!} itemId={row.id+'.1'}/></div>
                     </td>
                 </tr>
-                <tr key={getRandomId()} style={{
+                <tr key={row.id!+1+index} style={{
                     maxHeight: expendedId === row.id+'.1' ? '100%' : 0,
                     transition: 'max-height 0.15s ease-out',
                     lineHeight: expendedId === row.id+'.1' ? '100%' : 0,
@@ -174,7 +179,7 @@ const Table: FC<TableProps> = (props) => {
                                             Client
                                         </h5>
                                         <p className='additional__text'>
-                                            {row.clients}
+                                            {row.client}
                                         </p>
                                     </div>
                                     <div>

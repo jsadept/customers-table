@@ -30,14 +30,11 @@ const TableContainer = () => {
     useEffect(() => {
         dispatch(sortListByColumn(''))
         setCols(headers);
+        setRows(sortedList || defaultList);
     }, [])
 
     useEffect(() => {
-        if(isSorted){
-            setRows(sortedList);
-        }else{
-            setRows(defaultList);
-        }
+        setRows(sortedList);
     }, [defaultList, sortedList])
 
     const handleDragStart = (e: React.DragEvent) => {
