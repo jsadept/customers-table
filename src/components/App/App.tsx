@@ -13,7 +13,7 @@ const App = () => {
 
     return (
         <Layout pageName={'Customers list'} >
-            <TableContainer/>
+            <CustomersList/>
         </Layout>
     );
 };
