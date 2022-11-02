@@ -99,10 +99,11 @@ const Table: FC<TableProps> = (props) => {
                 <>
                 <tr
                     style={{
-                        backgroundColor: expendedId === row.id+'.1' ? '#66AFFF' : (index % 2 === 0 ? '#FFFFFF' : '#FCFCFD'),
-                        color: expendedId === row.id+'.1' ? '#FFFFFF' : '#6E6B7B'
+                        backgroundColor: expendedId === row.id ? '#66AFFF' : (index % 2 === 0 ? '#FFFFFF' : '#FCFCFD'),
+                        color: expendedId === row.id ? '#FFFFFF' : '#6E6B7B'
                     }}
                     key={row.id!+index}
+                    className={expendedId === row.id ? 'is-expended' : ''}
                 >
                     {Object.entries(row).map(([k, value], idx) => {
                         const currentHeader = cols[idx]?.id as keyof typeof row;
@@ -155,20 +156,21 @@ const Table: FC<TableProps> = (props) => {
                         }}
                         className="py-4 pr-3 pl-4"
                     >
-                        <div style={{cursor: 'pointer'}} onClick={() => onExpendAdditional(row.id+'.1')}><ShowMoreButton expendedId={expendedId!} itemId={row.id+'.1'} /></div>
+                        <div style={{cursor: 'pointer'}} onClick={() => onExpendAdditional(row.id!)}><ShowMoreButton expendedId={expendedId!} itemId={row.id+'.1'} /></div>
                         <div className="ml-4 flex align-bottom"><Dropdown tableItemId={row.id} tableItemStatus={row.status} expendedId={expendedId!} itemId={row.id+'.1'}/></div>
                     </td>
                 </tr>
-                <tr key={row.id!+1+index} style={{
-                    maxHeight: expendedId === row.id+'.1' ? '100%' : 0,
+                <tr key={row.id!+'.1'} id={row.id!+1} style={{
+                    maxHeight: expendedId === row.id ? '100%' : 0,
                     transition: 'max-height 0.15s ease-out',
-                    lineHeight: expendedId === row.id+'.1' ? '100%' : 0,
-                    opacity: expendedId === row.id+'.1' ? '100%' : 0,
-                    display: expendedId === row.id+'.1' ? 'table-row' : 'none',
+                    lineHeight: expendedId === row.id ? '100%' : 0,
+                    opacity: expendedId === row.id ? '100%' : 0,
+                    display: expendedId === row.id ? 'table-row' : 'none',
                 }}
+                    className={expendedId === row.id ? 'is-expended' : ''}
                 >
                     <td
-                        style={{padding: expendedId === row.id+'.1' ? '16px 26px 30px' : '0'}}
+                        style={{padding: expendedId === row.id ? '16px 26px 30px' : '0'}}
                         colSpan={cols.length-1}
                     >
                         <div className='relative h-44'>
@@ -205,7 +207,7 @@ const Table: FC<TableProps> = (props) => {
                         </div>
                     </td>
                     <td
-                        style={{padding: expendedId === row.id+'.1' ? '16px 26px 30px' : '0'}}
+                        style={{padding: expendedId === row.id ? '16px 26px 30px' : '0'}}
                         colSpan={2}
                     >
                         <div className='flex h-full justify-end'>

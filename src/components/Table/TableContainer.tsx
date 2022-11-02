@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ElementType, ReactElement, useEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {
     selectDefaultList,
@@ -19,7 +19,6 @@ const TableContainer = () => {
     const sortKey = useAppSelector(selectSortKey);
     const order = useAppSelector(selectOrder);
 
-
     const [cols, setCols] = useState<CustomersListHeaders[]>(headers);
     const [rows, setRows] = useState<CustomersList[]>(defaultList);
     const [isSorted, setIsSorted] = useState<boolean>(false);
@@ -31,6 +30,13 @@ const TableContainer = () => {
         dispatch(sortListByColumn(''))
         setCols(headers);
         setRows(sortedList || defaultList);
+
+
+        document.addEventListener('mousedown',closeOpenMenus)
+
+        return () => {
+            document.removeEventListener('mousedown',closeOpenMenus)
+        }
     }, [])
 
     useEffect(() => {
@@ -70,6 +76,14 @@ const TableContainer = () => {
         dispatch(sortListByColumn(sortKey))
         setIsSorted(true);
     }
+
+    const closeOpenMenus = (e: Event) => {
+        let target = e?.target as HTMLElement;
+        if(target.closest('.is-expended') === null){
+            setExpendedId(undefined)
+        }
+    }
+
     return (
         <Table
             {...{
